@@ -28,6 +28,7 @@ function OverviewPage() {
         const response = await apiService.get("balances");
         setBalances(response.data);
     };
+
     return (
         <IonPage>
             <IonHeader>
