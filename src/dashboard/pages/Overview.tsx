@@ -9,10 +9,9 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
-import { RouteComponentProps } from "react-router";
 
+import ApiService from "../../core/ApiService";
 import WealthGraph from "../components/WealthGraph";
-import ApiService from "../core/ApiService";
 import "./Page.css";
 
 const apiService = new ApiService();
@@ -26,7 +25,7 @@ function OverviewPage() {
 
     const getBalances = async () => {
         const response = await apiService.get("balances");
-        setBalances(response.data);
+        // setBalances(response.data);
     };
 
     return (

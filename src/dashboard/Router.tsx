@@ -1,13 +1,10 @@
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
 import { Route, RouteComponentProps } from "react-router-dom";
 
-/* React Vis: Nice graphs */
-import "react-vis/dist/style.css";
+import Menu from "./components/Menu";
+import OverviewPage from "./pages/Overview";
 
-import Menu from "../components/Menu";
-import OverviewPage from "./Overview";
-
-export default function BasePage({ match }: RouteComponentProps) {
+export default function BaseRouter({ match }: RouteComponentProps) {
     return (
         <IonSplitPane contentId="main">
             <Menu />

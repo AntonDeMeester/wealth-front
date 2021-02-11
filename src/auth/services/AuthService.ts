@@ -1,4 +1,5 @@
 import { AxiosResponse } from "axios";
+import { CreateUser, LoginResponse, LoginUser, RefreshResponse, UserResponse } from "src/auth/models";
 import ApiService from "../../core/ApiService";
 
 const ACCESS_TOKEN = "access_token";
@@ -7,37 +8,36 @@ const REFRESH_TOKEN = "refresh_token";
 class AuthService {
     private apiService: ApiService;
     private routes = {
-        login: 'auth/jwt/login',
-        register: 'auth/register',
-        refresh: 'auth/jwt/refresh',
+        login: 'auth/login',
+        register: 'auth/user',
+        refresh: 'auth/refresh',
     }
 
     constructor() {
         this.apiService = new ApiService();
     }
 
-    public async login(username: string, password: string): Promise<boolean>{
-        // Needs to be form URL encoded according to OAth Specs
-        const data = new URLSearchParams();
-        data.append('username', username);
-        data.append('password', password);
-        data.append('grant_type', 'password');
-        const response = await this.apiService.post(this.routes.login, data, {'Content-Type': 'application/x-www-form-urlencoded'});
+    public async login(loginUser: LoginUser): Promise<boolean>{
+        const response = await this.apiService.post<LoginResponse>(this.routes.login, loginUser);
         if(response.status !== 200) {
             return false
         }
-        this.setAccessToken(response.data.access_token);
-        this.setRefreshToken(response.data.refresh_token);
+        this.setAccessToken(response.data.accessToken);
+        this.setRefreshToken(response.data.refreshToken);
         return true
     }
 
-    public async register(username: string, password: string): Promise<AxiosResponse> {
-        const data = { username , password }
-        return this.apiService.post(this.routes.register, data)
+    public async register(user: CreateUser): Promise<AxiosResponse<UserResponse>> {
+        return this.apiService.post<UserResponse>(this.routes.register, user)
     }
 
-    public async refreshToken(refreshToken: string): Promise<AxiosResponse> {
-        return this.apiService.post(this.routes.refresh, {refresh_token: refreshToken});
+    public async refreshToken(): Promise<AxiosResponse<RefreshResponse>> {
+        const refreshToken = this.getRefreshToken()
+        const response = await this.apiService.post<RefreshResponse>(this.routes.refresh, {refreshToken});
+        if(response.status === 200) {
+            this.setAccessToken(response.data.accessToken)
+        }
+        return response
     }
     
     public getAccessToken(): string | null {
@@ -73,6 +73,10 @@ class AuthService {
     public resetTokens() {
         this.resetAccessToken();
         this.resetRefreshToken()
+    }
+
+    public isLoggedIn() {
+        return !!this.getAccessToken()
     }
 
 }

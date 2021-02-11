@@ -1,11 +1,16 @@
 import { IonButton, IonContent } from "@ionic/react";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
+import { LoginUser } from "src/auth/models";
 
 import CenteredForm from "../../shared/components/CenteredForm";
 import WealthInputItem from "../../shared/components/InputItem";
 import AuthService from "../services/AuthService";
 
 export function LoginPage() {
+    const { control, handleSubmit, errors } = useForm<LoginUser>();
+
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const authService = new AuthService();
@@ -17,30 +22,28 @@ export function LoginPage() {
             console.log("Invalid");
             return;
         }
-        await authService.login(username, password);
+        await authService.login({ email: username, password });
     }
 
     return (
         <IonContent>
             <CenteredForm centerVertically={true}>
                 <WealthInputItem
-                    value={username}
                     label={"Username"}
                     autocomplete="email"
                     inputmode="email"
                     name="username"
                     required={true}
                     type="email"
-                    onIonChange={(e) => setUsername(e.detail.value || "")}
+                    control={control}
                 />
                 <WealthInputItem
-                    value={password}
                     label={"Password"}
                     inputmode="text"
                     name="username"
                     required={true}
                     type="password"
-                    onIonChange={(e) => setPassword(e.detail.value || "")}
+                    control={control}
                 />
                 <IonButton onClick={() => login()}>Log In</IonButton>
             </CenteredForm>

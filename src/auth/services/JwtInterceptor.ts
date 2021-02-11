@@ -52,11 +52,10 @@ async function refreshJwt(error: AxiosError): Promise<AxiosResponse> {
     if (error.response?.status === 403 && !originalRequest["_retry"]) {
         // @ts-ignore
         originalRequest["_retry"] = true;
-        const refreshResponse = await authService.refreshToken(refreshToken);
+        const refreshResponse = await authService.refreshToken();
         if (refreshResponse.status !== 200) {
             return Promise.reject(error);
         }
-        authService.setAccessToken(refreshResponse.data.refreshToken);
         return axios.request(originalRequest);
     }
     return Promise.reject(error);

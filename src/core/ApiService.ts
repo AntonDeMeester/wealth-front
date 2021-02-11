@@ -1,9 +1,5 @@
-import axios, {
-    AxiosError,
-    AxiosInstance,
-    AxiosRequestConfig,
-    AxiosResponse,
-} from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import applyCaseMiddleware from "axios-case-converter";
 
 import config from "../config";
 
@@ -12,25 +8,27 @@ interface Headers {
 }
 
 const baseUrl: string = config.host;
-const axiosInstance = axios.create({ baseURL: baseUrl });
+const axiosInstance = applyCaseMiddleware(axios.create({ baseURL: baseUrl }));
 
 class ApiService {
-    public async get(
+    public async get<ResponseType>(
         endpoint: string,
         headers: Headers = {}
-    ): Promise<AxiosResponse<any>> {
-        return axiosInstance.get(endpoint, { headers: headers });
+    ): Promise<AxiosResponse<ResponseType>> {
+        return axiosInstance.get<ResponseType>(endpoint, { headers: headers });
     }
 
-    public async post(
+    public async post<ResponseType>(
         endpoint: string,
         data: any = {},
         headers: Headers = {}
-    ): Promise<AxiosResponse<any>> {
+    ): Promise<AxiosResponse<ResponseType>> {
         if (!headers["Content-Type"]) {
             headers = { ...headers, "Content-Type": "application/json" };
         }
-        return axiosInstance.post(endpoint, data, { headers: headers });
+        return axiosInstance.post<ResponseType>(endpoint, data, {
+            headers: headers,
+        });
     }
 
     public addRequestInterceptor(

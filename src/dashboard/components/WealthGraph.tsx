@@ -1,5 +1,4 @@
 import moment from "moment";
-import { useEffect, useState } from "react";
 import {
     FlexibleXYPlot,
     LineSeries,

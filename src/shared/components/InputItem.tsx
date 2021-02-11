@@ -1,22 +1,44 @@
-import { IonInput, IonItem, IonLabel } from "@ionic/react";
+import { IonInput, IonItem, IonLabel, IonText } from "@ionic/react";
+import { Control, Controller, DeepMap, FieldError } from "react-hook-form";
 
 import { IonInputProps } from "../types/IonProxyTypes";
 import "./InputItem.scss";
 
 interface SpecificWealthItemProps {
+    name: string;
     label: string;
-    value: string;
+    control: Control<Record<string, any>>;
+    errors?: DeepMap<Record<string, any>, FieldError>;
 }
 
 type WealthItemProps = SpecificWealthItemProps & IonInputProps;
 
-function WealthInputItem({ value, label, ...otherProps }: WealthItemProps) {
+function WealthInputItem({
+    label,
+    control,
+    name,
+    errors,
+    ...otherProps
+}: WealthItemProps) {
     return (
         <div className="wealth-item">
             <IonItem>
-                <IonLabel position="floating">{value ? label : ""}</IonLabel>
-                <IonInput value={value} placeholder={label} {...otherProps} />
+                <IonLabel position="floating">{label}</IonLabel>
+                <Controller
+                    render={({ onChange, onBlur, value }) => (
+                        <IonInput
+                            name={name}
+                            onIonChange={onChange}
+                            {...otherProps}
+                        />
+                    )}
+                    name={name}
+                    control={control}
+                    onChangeName="onIonChange"
+                    rules={{ required: true }}
+                />
             </IonItem>
+            <IonText class="error">{errors?.[name]?.message}</IonText>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import * as JwtInterceptors from "./auth/services/JwtInterceptor";
+import * as JwtInterceptors from "src/auth/services/JwtInterceptor";
 
 export function addInterceptors() {
     JwtInterceptors.addJwtHeaderInterceptor();

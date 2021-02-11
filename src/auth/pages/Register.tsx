@@ -1,50 +1,99 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { IonButton, IonContent } from "@ionic/react";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+
+import { CreateUser } from "src/auth/models";
+import AuthService from "src/auth/services/AuthService";
 
 import CenteredForm from "../../shared/components/CenteredForm";
 import WealthInputItem from "../../shared/components/InputItem";
 
 export function RegisterPage() {
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [password2, setPassword2] = useState<string>("");
+    const validationSchema = yup.object().shape({
+        email: yup.string().email().required(),
+        firstName: yup.string().required(),
+        lastName: yup.string().required(),
+        password: yup.string().required(),
+        password2: yup
+            .string()
+            .required()
+            .oneOf([yup.ref("password")], "Passwords must match"),
+    });
+
+    const { control, handleSubmit, errors, formState } = useForm<CreateUser>({
+        resolver: yupResolver(validationSchema),
+        mode: "onChange",
+    });
+
+    const authService = new AuthService();
+
+    async function register(user: CreateUser) {
+        const result = await authService.register(user);
+        console.log(result.data);
+    }
 
     return (
         <IonContent>
-            <CenteredForm centerVertically={true}>
+            <CenteredForm
+                centerVertically={true}
+                onSubmit={handleSubmit(register)}
+            >
                 <WealthInputItem
-                    label={"Username"}
-                    value={username}
+                    label={"Email"}
                     autocomplete="email"
                     inputmode="email"
-                    name="username"
+                    name="email"
                     required={true}
                     type="email"
-                    onIonChange={(e) => setUsername(e.detail.value || "")}
+                    control={control}
+                    errors={errors}
                 />
                 <WealthInputItem
-                    value={password}
-                    label={"Password"}
+                    label={"First name"}
+                    autocomplete="given-name"
                     inputmode="text"
-                    name="username"
+                    name="firstName"
                     required={true}
-                    type="password"
-                    onIonChange={(e: CustomEvent) =>
-                        setPassword(e.detail.value || "")
-                    }
+                    type="text"
+                    control={control}
+                    errors={errors}
                 />
                 <WealthInputItem
-                    value={password2}
+                    label={"Last name"}
+                    autocomplete="family-name"
+                    inputmode="text"
+                    name="lastName"
+                    required={true}
+                    type="text"
+                    control={control}
+                    errors={errors}
+                />
+                <WealthInputItem
                     label={"Password"}
                     inputmode="text"
-                    name="username"
+                    name="password"
                     required={true}
                     type="password"
-                    onIonChange={(e: CustomEvent) =>
-                        setPassword2(e.detail.value || "")
-                    }
+                    control={control}
+                    errors={errors}
                 />
-                <IonButton>Register</IonButton>
+                <WealthInputItem
+                    label={"Password"}
+                    inputmode="text"
+                    name="password2"
+                    required={true}
+                    type="password"
+                    control={control}
+                    errors={errors}
+                />
+                <IonButton
+                    type="submit"
+                    expand="block"
+                    disabled={!formState.isValid}
+                >
+                    Register
+                </IonButton>
             </CenteredForm>
         </IonContent>
     );
