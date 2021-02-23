@@ -6,6 +6,7 @@ import AuthService from "./AuthService";
 
 const authService = new AuthService();
 const apiService = new ApiService();
+const jwtExpiredData = "Signature has expired";
 
 const isNormalWealthRequest = (request: AxiosRequestConfig) => {
     if (
@@ -15,7 +16,7 @@ const isNormalWealthRequest = (request: AxiosRequestConfig) => {
         return false;
     }
     if (
-        request.url?.startsWith("/auth") ||
+        request.url?.includes("auth/") ||
         request.url?.startsWith(config.host + "auth")
     ) {
         return false;
@@ -49,7 +50,12 @@ async function refreshJwt(error: AxiosError): Promise<AxiosResponse> {
         return Promise.reject(error);
     }
     // @ts-ignore
-    if (error.response?.status === 403 && !originalRequest["_retry"]) {
+    if (
+        error.response?.status === 422 &&
+        error.response.data?.detail === jwtExpiredData &&
+        // @ts-ignore
+        !originalRequest["_retry"]
+    ) {
         // @ts-ignore
         originalRequest["_retry"] = true;
         const refreshResponse = await authService.refreshToken();
@@ -65,12 +71,10 @@ let headerInterceptor: number | null = null;
 let refreshInterceptor: number | null = null;
 
 export function addJwtHeaderInterceptor() {
-    console.log("Add JWT Header interceptor");
     headerInterceptor = apiService.addRequestInterceptor(addJwtHeader);
 }
 
 export function addRefreshJwtInterceptor() {
-    console.log("Add JWT Refresh interceptor");
     refreshInterceptor = apiService.addResponseInterceptor(
         (response) => response,
         refreshJwt

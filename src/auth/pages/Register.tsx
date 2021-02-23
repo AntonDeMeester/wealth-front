@@ -30,7 +30,6 @@ export function RegisterPage() {
 
     async function register(user: CreateUser) {
         const result = await authService.register(user);
-        console.log(result.data);
     }
 
     return (

@@ -17,15 +17,26 @@ import "./Page.css";
 const apiService = new ApiService();
 
 function OverviewPage() {
-    const [balances, setBalances] = useState([]);
+    const [balances, setBalances] = useState<
+        { date: string; amount: number }[]
+    >([]);
 
     useEffect(() => {
         getBalances();
     }, []);
 
     const getBalances = async () => {
-        const response = await apiService.get("balances");
-        // setBalances(response.data);
+        const response = await apiService.get<
+            { date: string; amount: number }[]
+        >("balances");
+        setBalances(response.data);
+    };
+
+    const getTinkLink = async () => {
+        const response = await apiService.get<{ url: string }>("tink/link");
+        if (response?.data?.url) {
+            window.location.href = response?.data?.url;
+        }
     };
 
     return (
@@ -43,6 +54,9 @@ function OverviewPage() {
                 <WealthGraph balances={balances}></WealthGraph>
                 <IonButton onClick={() => getBalances()}>
                     Refresh Balance
+                </IonButton>
+                <IonButton onClick={() => getTinkLink()}>
+                    Authorize Bank Account
                 </IonButton>
             </IonContent>
         </IonPage>

@@ -9,4 +9,7 @@
     max-width: 600px;
     padding: 50px;
     background-color: var(--ion-color-light);
+
+    display: flex;
+    flex-direction: column;
 }

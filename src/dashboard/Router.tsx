@@ -1,5 +1,5 @@
 import { IonRouterOutlet, IonSplitPane } from "@ionic/react";
-import { Route, RouteComponentProps } from "react-router-dom";
+import { Redirect, Route, RouteComponentProps } from "react-router-dom";
 
 import Menu from "./components/Menu";
 import OverviewPage from "./pages/Overview";
@@ -15,11 +15,11 @@ export default function BaseRouter({ match }: RouteComponentProps) {
                     component={OverviewPage}
                 />
                 {/* <Route path={`${match.url}/:name`} component={Page} /> */}
-                {/* <Redirect
+                <Redirect
                     exact
                     from={`${match.url}`}
                     to={`${match.url}/overview`}
-                /> */}
+                />
             </IonRouterOutlet>
         </IonSplitPane>
     );

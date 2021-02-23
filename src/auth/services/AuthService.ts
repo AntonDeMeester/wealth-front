@@ -33,9 +33,12 @@ class AuthService {
 
     public async refreshToken(): Promise<AxiosResponse<RefreshResponse>> {
         const refreshToken = this.getRefreshToken()
-        const response = await this.apiService.post<RefreshResponse>(this.routes.refresh, {refreshToken});
+        const headers =  {Authorization: `Bearer ${refreshToken}`}
+        const response = await this.apiService.post<RefreshResponse>(this.routes.refresh, {}, headers);
         if(response.status === 200) {
             this.setAccessToken(response.data.accessToken)
+        } else {
+            this.resetTokens();
         }
         return response
     }

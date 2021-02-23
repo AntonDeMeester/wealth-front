@@ -1,51 +1,84 @@
-import { IonButton, IonContent } from "@ionic/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { IonButton, IonContent, IonText } from "@ionic/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
+import * as yup from "yup";
 
 import { LoginUser } from "src/auth/models";
 
 import CenteredForm from "../../shared/components/CenteredForm";
 import WealthInputItem from "../../shared/components/InputItem";
 import AuthService from "../services/AuthService";
+import "./Login.scss";
 
 export function LoginPage() {
-    const { control, handleSubmit, errors } = useForm<LoginUser>();
+    const history = useHistory();
+    const [formErrors, setFormErrors] = useState<string[]>([]);
 
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const validationSchema = yup.object().shape({
+        email: yup.string().email().required(),
+        password: yup.string().required(),
+    });
+
+    const { control, handleSubmit, errors, formState } = useForm<LoginUser>({
+        resolver: yupResolver(validationSchema),
+        mode: "onChange",
+    });
+
     const authService = new AuthService();
 
-    const isValid = () => username && password;
-
-    async function login() {
-        if (!isValid()) {
-            console.log("Invalid");
-            return;
+    async function login(user: LoginUser) {
+        setFormErrors([]);
+        try {
+            const result = await authService.login(user);
+        } catch (e) {
+            if (e.response?.status === 401) {
+                setFormErrors([e.response.text?.detail || "Login failed"]);
+                return;
+            } else {
+                throw e;
+            }
         }
-        await authService.login({ email: username, password });
+        setFormErrors([]);
+        history.push("/app");
     }
 
     return (
         <IonContent>
-            <CenteredForm centerVertically={true}>
+            <CenteredForm
+                centerVertically={true}
+                onSubmit={handleSubmit(login)}
+            >
                 <WealthInputItem
-                    label={"Username"}
+                    label={"Email"}
                     autocomplete="email"
                     inputmode="email"
-                    name="username"
+                    name="email"
                     required={true}
                     type="email"
                     control={control}
+                    errors={errors}
                 />
                 <WealthInputItem
                     label={"Password"}
                     inputmode="text"
-                    name="username"
+                    name="password"
                     required={true}
                     type="password"
                     control={control}
+                    errors={errors}
                 />
-                <IonButton onClick={() => login()}>Log In</IonButton>
+                <IonButton
+                    type="submit"
+                    expand="block"
+                    disabled={!formState.isValid}
+                >
+                    Log In
+                </IonButton>
+                {formErrors.map((error) => (
+                    <IonText className="formError">{error}</IonText>
+                ))}
             </CenteredForm>
         </IonContent>
     );
