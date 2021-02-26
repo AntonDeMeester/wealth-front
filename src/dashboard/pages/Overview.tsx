@@ -18,7 +18,7 @@ const apiService = new ApiService();
 
 function OverviewPage() {
     const [balances, setBalances] = useState<
-        { date: string; amount: number }[]
+        { date: string; amount: number; amountInEuro: number }[]
     >([]);
 
     useEffect(() => {
@@ -27,8 +27,8 @@ function OverviewPage() {
 
     const getBalances = async () => {
         const response = await apiService.get<
-            { date: string; amount: number }[]
-        >("balances");
+            { date: string; amount: number; amountInEuro: number }[]
+        >("banking/balances");
         setBalances(response.data);
     };
 

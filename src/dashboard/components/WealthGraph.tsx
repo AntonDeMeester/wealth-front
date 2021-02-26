@@ -11,7 +11,7 @@ import {
 import "./WealthGraph.scss";
 
 interface WealthProps {
-    balances: { date: string; amount: number }[];
+    balances: { date: string; amount: number; amountInEuro: number }[];
 }
 
 function WealthGraph({ balances }: WealthProps) {
@@ -57,13 +57,13 @@ const getTickValuesXAxis = (dates: moment.Moment[]): number[] => {
 };
 
 const consolidateBalances = (
-    balances: { date: string; amount: number }[]
+    balances: { date: string; amount: number; amountInEuro: number }[]
 ): { date: Date; amount: number }[] => {
     const initial: { [date: string]: number } = {};
     const dateMap: { [date: string]: number } = balances.reduce(
         (reduced, current) => {
             reduced[current.date] =
-                current.amount + (reduced[current.date] ?? 0);
+                current.amountInEuro + (reduced[current.date] ?? 0);
             return reduced;
         },
         initial

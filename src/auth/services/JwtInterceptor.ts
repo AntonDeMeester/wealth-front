@@ -62,6 +62,8 @@ async function refreshJwt(error: AxiosError): Promise<AxiosResponse> {
         if (refreshResponse.status !== 200) {
             return Promise.reject(error);
         }
+        delete originalRequest.headers?.Authorization;
+        addJwtHeader(originalRequest);
         return axios.request(originalRequest);
     }
     return Promise.reject(error);
