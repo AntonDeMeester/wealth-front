@@ -7,15 +7,23 @@ interface Headers {
     [key: string]: string;
 }
 
+interface QueryParams {
+    [key: string]: string | undefined;
+}
+
 const baseUrl: string = config.host;
 const axiosInstance = applyCaseMiddleware(axios.create({ baseURL: baseUrl }));
 
 class ApiService {
     public async get<ResponseType>(
         endpoint: string,
-        headers: Headers = {}
+        headers?: Headers,
+        queryParams?: QueryParams
     ): Promise<AxiosResponse<ResponseType>> {
-        return axiosInstance.get<ResponseType>(endpoint, { headers: headers });
+        return axiosInstance.get<ResponseType>(endpoint, {
+            headers: headers,
+            params: queryParams,
+        });
     }
 
     public async post<ResponseType>(

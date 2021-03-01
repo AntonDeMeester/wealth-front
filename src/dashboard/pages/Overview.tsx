@@ -12,7 +12,6 @@ import { useEffect, useState } from "react";
 
 import ApiService from "../../core/ApiService";
 import WealthGraph from "../components/WealthGraph";
-import "./Page.css";
 
 const apiService = new ApiService();
 
@@ -32,13 +31,6 @@ function OverviewPage() {
         setBalances(response.data);
     };
 
-    const getTinkLink = async () => {
-        const response = await apiService.get<{ url: string }>("tink/link");
-        if (response?.data?.url) {
-            window.location.href = response?.data?.url;
-        }
-    };
-
     return (
         <IonPage>
             <IonHeader>
@@ -54,9 +46,6 @@ function OverviewPage() {
                 <WealthGraph balances={balances}></WealthGraph>
                 <IonButton onClick={() => getBalances()}>
                     Refresh Balance
-                </IonButton>
-                <IonButton onClick={() => getTinkLink()}>
-                    Authorize Bank Account
                 </IonButton>
             </IonContent>
         </IonPage>

@@ -21,7 +21,7 @@ function WealthInputItem({
     ...otherProps
 }: WealthItemProps) {
     return (
-        <div className="wealth-item">
+        <div className="wealth-input-item">
             <IonItem>
                 <IonLabel position="floating">{label}</IonLabel>
                 <Controller
@@ -38,7 +38,9 @@ function WealthInputItem({
                     rules={{ required: true }}
                 />
             </IonItem>
-            <IonText class="error">{errors?.[name]?.message}</IonText>
+            <IonText class="input-item-error">
+                {errors?.[name]?.message}
+            </IonText>
         </div>
     );
 }

@@ -1,9 +1,11 @@
-.wealth-input-item {
+.wealth-select-item {
     padding-top: 8px;
     padding-bottom: 4px;
+    margin-right: 16px;
+    flex-grow: 1;
 }
 
-.input-item-error {
+.select-item-error {
     color: #ff0000;
     padding-left: 12px;
     font-size: smaller;
