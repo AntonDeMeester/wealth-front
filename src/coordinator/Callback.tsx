@@ -7,6 +7,7 @@ function Callback() {
     const history = useHistory();
     const queryParams = new URLSearchParams(useLocation().search);
     const code = queryParams.get("code");
+    const apiService = new ApiService();
 
     useEffect(() => {
         if (!code) {
@@ -17,12 +18,11 @@ function Callback() {
             history.push("/app");
         };
         processTinkCode();
-    }, []);
+    }, [history, code, apiService]);
 
     if (!code) {
         return <div>Something went wrong</div>;
     }
-    const apiService = new ApiService();
 
     return <div>Loading</div>;
 }

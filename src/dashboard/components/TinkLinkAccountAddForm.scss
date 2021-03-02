@@ -1,9 +1,13 @@
 .tink-link-form {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .tink-link-form-item {
     margin-right: 16px;
     flex-grow: 1;
+}
+
+.tink-link-modal {
+    padding: 32px;
 }

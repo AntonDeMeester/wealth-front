@@ -1,10 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IonButton, IonSelect, IonText } from "@ionic/react";
+import {
+    IonButton,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonModal,
+    IonTitle,
+} from "@ionic/react";
+import { add } from "ionicons/icons";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import ApiService from "src/core/ApiService";
-import CenteredForm from "src/shared/components/CenteredForm";
 import SelectItem from "src/shared/components/SelectItem";
 
 import "./TinkLinkAccountAddForm.scss";
@@ -17,6 +25,8 @@ interface TinkLinkParameters {
 }
 
 function TinkLinkAccountAddForm() {
+    const [showModal, setShowModal] = useState(false);
+
     const markets = [
         { name: "Sweden", value: "SE" },
         { name: "Belgium", value: "BE" },
@@ -31,12 +41,7 @@ function TinkLinkAccountAddForm() {
         test: yup.string().default("false"),
     });
 
-    const {
-        control,
-        handleSubmit,
-        errors,
-        formState,
-    } = useForm<TinkLinkParameters>({
+    const { control, handleSubmit } = useForm<TinkLinkParameters>({
         resolver: yupResolver(validationSchema),
     });
 
@@ -54,27 +59,53 @@ function TinkLinkAccountAddForm() {
             window.location.href = response?.data?.url;
         }
     };
-
     return (
-        <form onSubmit={handleSubmit(getTinkLink)} className="tink-link-form">
-            <SelectItem
-                className="tink-link-form-item"
-                label={"Market"}
-                name={"market"}
-                control={control}
-                options={markets}
-                defaultOption={markets[0]}
-            />
-            <SelectItem
-                className="tink-link-form-item"
-                label={"Test enabled"}
-                name={"test"}
-                control={control}
-                options={testOptions}
-                defaultOption={testOptions[1]}
-            />
-            <IonButton type="submit">Link account</IonButton>
-        </form>
+        <div>
+            <IonModal
+                isOpen={showModal}
+                cssClass="my-custom-class"
+                onDidDismiss={() => setShowModal(false)}
+            >
+                <div className="tink-link-modal">
+                    <IonTitle>Add new bank accounts</IonTitle>
+                    <form
+                        onSubmit={handleSubmit(getTinkLink)}
+                        className="tink-link-form"
+                    >
+                        <SelectItem
+                            className="tink-link-form-item"
+                            label={"Market"}
+                            name={"market"}
+                            control={control}
+                            options={markets}
+                            defaultOption={markets[0]}
+                        />
+                        <SelectItem
+                            className="tink-link-form-item"
+                            label={"Test enabled"}
+                            name={"test"}
+                            control={control}
+                            options={testOptions}
+                            defaultOption={testOptions[1]}
+                        />
+                        <IonButton
+                            type="submit"
+                            onClick={() => setShowModal(false)}
+                        >
+                            Link account
+                        </IonButton>
+                    </form>
+                </div>
+            </IonModal>
+            <IonFab vertical="bottom" horizontal="end">
+                <IonFabButton>
+                    <IonIcon
+                        icon={add}
+                        onClick={() => setShowModal(true)}
+                    ></IonIcon>
+                </IonFabButton>
+            </IonFab>
+        </div>
     );
 }
 

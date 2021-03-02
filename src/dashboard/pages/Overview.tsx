@@ -9,6 +9,9 @@ import {
     IonToolbar,
 } from "@ionic/react";
 import { useEffect, useState } from "react";
+import { useRouteMatch } from "react-router";
+
+import { WealthItem } from "src/shared/types/Banking";
 
 import ApiService from "../../core/ApiService";
 import WealthGraph from "../components/WealthGraph";
@@ -16,18 +19,17 @@ import WealthGraph from "../components/WealthGraph";
 const apiService = new ApiService();
 
 function OverviewPage() {
-    const [balances, setBalances] = useState<
-        { date: string; amount: number; amountInEuro: number }[]
-    >([]);
+    // We use this to make sure we refresh the balances when we navigate back to the page
+    // Without refreshing balances, the graph won't render
+    const match = useRouteMatch();
+    const [balances, setBalances] = useState<WealthItem[]>([]);
 
     useEffect(() => {
         getBalances();
-    }, []);
+    }, [match]);
 
     const getBalances = async () => {
-        const response = await apiService.get<
-            { date: string; amount: number; amountInEuro: number }[]
-        >("banking/balances");
+        const response = await apiService.get<WealthItem[]>("banking/balances");
         setBalances(response.data);
     };
 

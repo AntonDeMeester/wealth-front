@@ -4,7 +4,7 @@ import { Redirect, Route } from "react-router-dom";
 
 import AuthRouter from "src/auth/Router";
 import AuthService from "src/auth/services/AuthService";
-import BaseRouter from "src/dashboard/Router";
+import DashboardRouter from "src/dashboard/Router";
 
 import Callback from "./Callback";
 import { addInterceptors } from "./Interceptors";
@@ -17,19 +17,28 @@ export const CoordinatorPage = () => {
         <IonApp>
             <IonReactRouter>
                 <IonRouterOutlet id="main">
-                    <Route path="/auth" component={AuthRouter} />
+                    <Route
+                        path="/auth"
+                        render={(props) =>
+                            !authService.isLoggedIn() ? (
+                                <AuthRouter {...props} />
+                            ) : (
+                                <Redirect to={{ pathname: "/" }} />
+                            )
+                        }
+                    />
                     <Route
                         path="/app"
                         render={(props) =>
                             authService.isLoggedIn() ? (
-                                <BaseRouter {...props} />
+                                <DashboardRouter {...props} />
                             ) : (
                                 <Redirect to={{ pathname: "/auth" }} />
                             )
                         }
                     />
                     <Route path="/callback" component={Callback}></Route>
-                    <Redirect exact from="/" to="/app" />
+                    <Redirect exact from="/" to="/app/overview" />
                 </IonRouterOutlet>
             </IonReactRouter>
         </IonApp>

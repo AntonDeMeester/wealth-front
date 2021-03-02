@@ -8,10 +8,17 @@ import {
     YAxis,
 } from "react-vis";
 
+import { WealthItem } from "src/shared/types/Banking";
+
 import "./WealthGraph.scss";
 
 interface WealthProps {
-    balances: { date: string; amount: number; amountInEuro: number }[];
+    balances: WealthItem[];
+}
+
+interface GraphPoint {
+    date: string | Date;
+    amount: number;
 }
 
 function WealthGraph({ balances }: WealthProps) {
@@ -56,9 +63,7 @@ const getTickValuesXAxis = (dates: moment.Moment[]): number[] => {
     return out;
 };
 
-const consolidateBalances = (
-    balances: { date: string; amount: number; amountInEuro: number }[]
-): { date: Date; amount: number }[] => {
+const consolidateBalances = (balances: WealthItem[]): GraphPoint[] => {
     const initial: { [date: string]: number } = {};
     const dateMap: { [date: string]: number } = balances.reduce(
         (reduced, current) => {
@@ -74,9 +79,7 @@ const consolidateBalances = (
     }));
 };
 
-const getAmountRange = (
-    data: { date: Date; amount: number }[]
-): [number, number] => {
+const getAmountRange = (data: GraphPoint[]): [number, number] => {
     const max = Math.max(...data.map((d) => d.amount));
     return [0, max * 1.1];
 };

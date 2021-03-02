@@ -29,7 +29,7 @@ export function RegisterPage() {
     const authService = new AuthService();
 
     async function register(user: CreateUser) {
-        const result = await authService.register(user);
+        await authService.register(user);
     }
 
     return (

@@ -1,5 +1,4 @@
 import {
-    IonButton,
     IonButtons,
     IonContent,
     IonHeader,
@@ -8,20 +7,27 @@ import {
     IonTitle,
     IonToolbar,
 } from "@ionic/react";
+import { useEffect, useState } from "react";
 
+import ApiService from "src/core/ApiService";
+import AccountCard from "src/dashboard/components/AccountCard";
 import TinkLinkAccountAddForm from "src/dashboard/components/TinkLinkAccountAddForm";
+import { Account } from "src/shared/types/Banking";
 
-import ApiService from "../../core/ApiService";
 import "./Page.css";
 
 const apiService = new ApiService();
 
 function AccountsPage() {
-    const getTinkLink = async () => {
-        const response = await apiService.get<{ url: string }>("tink/link");
-        if (response?.data?.url) {
-            window.location.href = response?.data?.url;
-        }
+    const [accounts, setAccounts] = useState<Account[]>([]);
+
+    useEffect(() => {
+        getAccounts();
+    }, []);
+
+    const getAccounts = async () => {
+        const response = await apiService.get<Account[]>("banking/accounts");
+        setAccounts(response.data);
     };
 
     return (
@@ -37,6 +43,9 @@ function AccountsPage() {
 
             <IonContent fullscreen className="ion-padding">
                 <TinkLinkAccountAddForm></TinkLinkAccountAddForm>
+                {accounts.map((account) => (
+                    <AccountCard account={account} key={account.externalId} />
+                ))}
             </IonContent>
         </IonPage>
     );

@@ -31,7 +31,7 @@ export function LoginPage() {
     async function login(user: LoginUser) {
         setFormErrors([]);
         try {
-            const result = await authService.login(user);
+            await authService.login(user);
         } catch (e) {
             if (e.response?.status === 401) {
                 setFormErrors([e.response.text?.detail || "Login failed"]);

@@ -38,13 +38,15 @@ function WealthSelectItem({
     return (
         <div className="wealth-select-item">
             <IonItem>
-                {/* <IonLabel position="floating">{label}</IonLabel> */}
+                <IonLabel class="wealth-select-label" position="floating">
+                    {label}
+                </IonLabel>
                 <Controller
                     render={({ onChange, onBlur, value }) => (
                         <IonSelect
                             name={name}
                             onIonChange={(event) => onChange(event)}
-                            value={defaultOption?.value}
+                            value={value || defaultOption?.value}
                             {...otherProps}
                         >
                             {options.map((optionItem) => (
