@@ -3,11 +3,12 @@ import { useHistory, useLocation } from "react-router";
 
 import ApiService from "src/core/ApiService";
 
+const apiService = new ApiService();
+
 function Callback() {
     const history = useHistory();
     const queryParams = new URLSearchParams(useLocation().search);
     const code = queryParams.get("code");
-    const apiService = new ApiService();
 
     useEffect(() => {
         if (!code) {
