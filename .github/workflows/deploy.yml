@@ -21,4 +21,4 @@ jobs:
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./dist/ s3://wealth.illuminatus.be --delete
       - name: Invalidate current CloudFront
-        run: aws cloudfront create-invalidation --distribution-id E39U5HVNRFRUCR --paths "/*"
+        run: aws cloudfront create-invalidation --distribution-id E1FNEOEQQDMVDF --paths "/*"
