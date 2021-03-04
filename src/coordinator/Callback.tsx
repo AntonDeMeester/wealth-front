@@ -19,7 +19,7 @@ function Callback() {
             history.push("/app");
         };
         processTinkCode();
-    }, [history, code, apiService]);
+    }, [history, code]);
 
     if (!code) {
         return <div>Something went wrong</div>;
