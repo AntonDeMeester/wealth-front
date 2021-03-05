@@ -6,7 +6,6 @@ import AuthRouter from "src/auth/Router";
 import AuthService from "src/auth/services/AuthService";
 import DashboardRouter from "src/dashboard/Router";
 
-import Callback from "./Callback";
 import { addInterceptors } from "./Interceptors";
 
 export const CoordinatorPage = () => {
@@ -37,7 +36,6 @@ export const CoordinatorPage = () => {
                             )
                         }
                     />
-                    <Route path="/callback" component={Callback}></Route>
                     <Redirect exact from="/" to="/app/overview" />
                 </IonRouterOutlet>
             </IonReactRouter>

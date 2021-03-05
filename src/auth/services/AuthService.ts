@@ -27,6 +27,10 @@ class AuthService {
         return true
     }
 
+    public logout() {
+        this.resetAccessToken();
+    }
+
     public async register(user: CreateUser): Promise<AxiosResponse<UserResponse>> {
         return this.apiService.post<UserResponse>(this.routes.register, user)
     }

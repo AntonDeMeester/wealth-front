@@ -1,4 +1,5 @@
 import {
+    IonButton,
     IonContent,
     IonIcon,
     IonItem,
@@ -15,7 +16,9 @@ import {
     fileTrayFullSharp,
 } from "ionicons/icons";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+
+import AuthService from "src/auth/services/AuthService";
 
 import "./Menu.css";
 
@@ -40,8 +43,17 @@ const appPages: AppPage[] = [
         mdIcon: fileTrayFullSharp,
     },
 ];
+
+const authService = new AuthService();
+
 const Menu: React.FC = () => {
     const location = useLocation();
+    const history = useHistory();
+
+    const logout = () => {
+        authService.logout();
+        history.push("/auth");
+    };
 
     return (
         <IonMenu contentId="main" type="overlay">
@@ -73,6 +85,7 @@ const Menu: React.FC = () => {
                         );
                     })}
                 </IonList>
+                <IonButton onClick={() => logout()}>Log out</IonButton>
             </IonContent>
         </IonMenu>
     );

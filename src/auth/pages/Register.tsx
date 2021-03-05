@@ -1,6 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IonButton, IonContent } from "@ionic/react";
+import { IonButton, IonContent, IonToast } from "@ionic/react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router";
 import * as yup from "yup";
 
 import { CreateUser } from "src/auth/models";
@@ -10,6 +12,8 @@ import CenteredForm from "../../shared/components/CenteredForm";
 import WealthInputItem from "../../shared/components/InputItem";
 
 export function RegisterPage() {
+    const history = useHistory();
+    const [showToast, setShowToast] = useState<boolean>(false);
     const validationSchema = yup.object().shape({
         email: yup.string().email().required(),
         firstName: yup.string().required(),
@@ -29,7 +33,16 @@ export function RegisterPage() {
     const authService = new AuthService();
 
     async function register(user: CreateUser) {
-        await authService.register(user);
+        try {
+            const result = await authService.register(user);
+            if (result.status < 400) {
+                history.push("/auth/login");
+            } else {
+                setShowToast(true);
+            }
+        } catch {
+            setShowToast(true);
+        }
     }
 
     return (
@@ -93,7 +106,16 @@ export function RegisterPage() {
                 >
                     Register
                 </IonButton>
+                <p>
+                    Already a user? Login <a href="/auth/login">here</a>
+                </p>
             </CenteredForm>
+            <IonToast
+                isOpen={showToast}
+                onDidDismiss={() => setShowToast(false)}
+                message="Something went wrong."
+                duration={2000}
+            />
         </IonContent>
     );
 }

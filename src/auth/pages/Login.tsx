@@ -79,6 +79,9 @@ export function LoginPage() {
                 {formErrors.map((error) => (
                     <IonText className="formError">{error}</IonText>
                 ))}
+                <p>
+                    No user yet? Register <a href="/auth/register">here</a>
+                </p>
             </CenteredForm>
         </IonContent>
     );
