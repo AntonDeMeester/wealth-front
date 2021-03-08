@@ -94,6 +94,9 @@ function TinkLinkAccountAddForm() {
                         >
                             Link account
                         </IonButton>
+                        <IonButton onClick={() => setShowModal(false)}>
+                            Cancel
+                        </IonButton>
                     </form>
                 </div>
             </IonModal>
