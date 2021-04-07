@@ -20,7 +20,7 @@ function Callback() {
             history.push("/app");
         };
         processTinkCode();
-    }, [history, code]);
+    }, [history, code, credentialsId]);
 
     if (!code) {
         return <div>Something went wrong</div>;
