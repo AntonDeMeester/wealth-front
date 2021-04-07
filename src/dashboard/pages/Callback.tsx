@@ -9,13 +9,14 @@ function Callback() {
     const history = useHistory();
     const queryParams = new URLSearchParams(useLocation().search);
     const code = queryParams.get("code");
+    const credentialsId = queryParams.get("credentials_id");
 
     useEffect(() => {
-        if (!code) {
+        if (!code && !credentialsId) {
             return;
         }
         const processTinkCode = async () => {
-            await apiService.post("tink/authorize", { code });
+            await apiService.post("tink/callback", { code, credentialsId });
             history.push("/app");
         };
         processTinkCode();
