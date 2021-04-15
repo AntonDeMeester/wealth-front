@@ -1,0 +1,33 @@
+.accounts-page-container {
+    height: 100%;
+    width: 100%;
+
+    padding: 32px;
+
+    display: flex;
+    flex-flow: column;
+    justify-content: stretch;
+    align-items: stretch;
+
+    background: var(--ion-background-color-medium);
+}
+
+.accounts-page-title-container {
+    margin: 32px 0px 0px 32px;
+
+    h1 {
+        margin: 16px 0px 0px 16px;
+        font-weight: bold;
+    }
+}
+
+.account-list-list-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.account-list-container {
+    flex-grow: 1;
+    max-width: 400px;
+}

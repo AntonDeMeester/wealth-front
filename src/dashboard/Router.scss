@@ -1,0 +1,11 @@
+.dashboard-router-container {
+    background-color: var(--ion-background-color-dark);
+}
+
+.dashboard-router-content {
+    margin: 50px 50px 50px 0px;
+
+    ion-router-outlet {
+        border-radius: 48px;
+    }
+}

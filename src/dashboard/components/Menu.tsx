@@ -1,6 +1,7 @@
 import {
     IonButton,
     IonContent,
+    IonFooter,
     IonIcon,
     IonItem,
     IonLabel,
@@ -14,13 +15,16 @@ import {
     trendingUpSharp,
     fileTrayFull,
     fileTrayFullSharp,
+    logOutOutline,
+    businessOutline,
+    homeOutline,
 } from "ionicons/icons";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import AuthService from "src/auth/services/AuthService";
 
-import "./Menu.css";
+import "./Menu.scss";
 
 interface AppPage {
     url: string;
@@ -42,6 +46,18 @@ const appPages: AppPage[] = [
         iosIcon: fileTrayFull,
         mdIcon: fileTrayFullSharp,
     },
+    {
+        title: "Overview New",
+        url: "/app/kristof",
+        iosIcon: homeOutline,
+        mdIcon: homeOutline,
+    },
+    {
+        title: "Accounts New",
+        url: "/app/accounts-2",
+        iosIcon: businessOutline,
+        mdIcon: businessOutline,
+    },
 ];
 
 const authService = new AuthService();
@@ -59,34 +75,36 @@ const Menu: React.FC = () => {
         <IonMenu contentId="main" type="overlay">
             <IonContent>
                 <IonList id="inbox-list">
-                    <IonListHeader>Wealth Overview</IonListHeader>
+                    <IonListHeader>
+                        <div className="menu-header-container">
+                            <IonIcon ios={fileTrayFull} md={fileTrayFull} />
+                            <p>John Doe</p>
+                        </div>
+                    </IonListHeader>
                     {appPages.map((appPage, index) => {
                         return (
                             <IonMenuToggle key={index} autoHide={false}>
                                 <IonItem
-                                    className={
-                                        location.pathname === appPage.url
-                                            ? "selected"
-                                            : ""
-                                    }
+                                    className={location.pathname === appPage.url ? "selected" : ""}
                                     routerLink={appPage.url}
                                     routerDirection="none"
                                     lines="none"
                                     detail={false}
                                 >
-                                    <IonIcon
-                                        slot="start"
-                                        ios={appPage.iosIcon}
-                                        md={appPage.mdIcon}
-                                    />
+                                    <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
                                     <IonLabel>{appPage.title}</IonLabel>
                                 </IonItem>
                             </IonMenuToggle>
                         );
                     })}
                 </IonList>
-                <IonButton onClick={() => logout()}>Log out</IonButton>
             </IonContent>
+            <IonFooter>
+                <IonButton fill="clear" color="dark" onClick={() => logout()}>
+                    <IonIcon slot="start" icon={logOutOutline} />
+                    Log out
+                </IonButton>
+            </IonFooter>
         </IonMenu>
     );
 };

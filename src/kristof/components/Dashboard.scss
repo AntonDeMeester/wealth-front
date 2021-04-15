@@ -1,0 +1,22 @@
+.dashboard-component-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.overview-dashboard-container {
+    width: 100%;
+
+    .dashboard-item-large {
+        height: 250px;
+    }
+}
+
+.dashboard-item-container {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-gap: 32px;
+}

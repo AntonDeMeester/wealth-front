@@ -20,7 +20,7 @@ import "react-vis/dist/style.css";
 import { CoordinatorPage } from "./coordinator/CoordinatorPage";
 
 /* Theme variables */
-import "./theme/variables.css";
+import "./theme/variables.scss";
 
 const App: React.FC = () => {
     return <CoordinatorPage></CoordinatorPage>;

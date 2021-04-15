@@ -19,21 +19,13 @@ export const CoordinatorPage = () => {
                     <Route
                         path="/auth"
                         render={(props) =>
-                            !authService.isLoggedIn() ? (
-                                <AuthRouter {...props} />
-                            ) : (
-                                <Redirect to={{ pathname: "/" }} />
-                            )
+                            !authService.isLoggedIn() ? <AuthRouter {...props} /> : <Redirect to={{ pathname: "/" }} />
                         }
                     />
                     <Route
                         path="/app"
                         render={(props) =>
-                            authService.isLoggedIn() ? (
-                                <DashboardRouter {...props} />
-                            ) : (
-                                <Redirect to={{ pathname: "/auth" }} />
-                            )
+                            authService.isLoggedIn() ? <DashboardRouter {...props} /> : <Redirect to={{ pathname: "/auth" }} />
                         }
                     />
                     <Redirect exact from="/" to="/app/overview" />
