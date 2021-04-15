@@ -1,0 +1,36 @@
+.dashboard-container {
+    height: 100%;
+    width: 100%;
+
+    padding: 32px;
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: stretch;
+
+    background: var(--ion-background-color-medium);
+}
+
+.dashboard-component {
+    flex: 3;
+    min-width: 500px;
+}
+
+.dashboard-other-container {
+    flex: 2;
+    min-width: 500px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+}
+
+.cashflow-component {
+    flex: 1;
+}
+
+.notifications-component {
+    flex: 1;
+}

@@ -1,0 +1,59 @@
+.dashboard-item {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard-item-left {
+    justify-content: space-between;
+    flex-direction: column;
+    margin-right: 16px;
+
+    ion-icon {
+        font-size: 48px;
+        color: white;
+    }
+
+    .dashboard-item-icon-container {
+        background-color: var(--ion-color-primary);
+        width: fit-content;
+        border-radius: 16px;
+        padding: 8px;
+    }
+
+    .dashboard-item-divider {
+        height: 24px;
+    }
+
+    .dashboard-item-amount {
+        align-self: flex-end;
+        font-size: x-large;
+        margin-block-end: 0;
+        color: var(--ion-color-dark);
+        font-weight: bold;
+    }
+
+    .dashboard-item-trend {
+        font-size: small;
+        margin-block-start: 0;
+        margin-block-end: 0;
+    }
+}
+
+.dashboard-item-right {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: 16px;
+
+    p {
+        text-align: center;
+        font-weight: bold;
+        margin-block-start: 0;
+        font-size: large;
+    }
+
+    .dashboard-item-graph {
+        flex-grow: 1;
+    }
+}
