@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router";
 
 import ApiService from "src/core/ApiService";
-import Dashboard from "src/kristof/components/Dashboard";
 import BasePage from "src/shared/components/BasePage";
 import { WealthItem } from "src/shared/types/Banking";
 
+import Dashboard from "./../components/Dashboard";
 import "./DashboardPage.scss";
 
 // import Cashflow from "src/kristof/components/Cashflow";

@@ -1,10 +1,10 @@
 import { cash, logoBitcoin, trendingUp, home } from "ionicons/icons";
 
 import DataService from "src/core/DataService";
-import DashboardItem from "src/kristof/components/DashboardItem";
 import { WealthItem } from "src/shared/types/Banking";
 
 import "./Dashboard.scss";
+import DashboardItem from "./DashboardItem";
 
 interface DashboardProps {
     balances: WealthItem[];

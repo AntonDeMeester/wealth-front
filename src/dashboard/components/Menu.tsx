@@ -10,15 +10,7 @@ import {
     IonMenu,
     IonMenuToggle,
 } from "@ionic/react";
-import {
-    trendingUp,
-    trendingUpSharp,
-    fileTrayFull,
-    fileTrayFullSharp,
-    logOutOutline,
-    businessOutline,
-    homeOutline,
-} from "ionicons/icons";
+import { fileTrayFull, logOutOutline, businessOutline, homeOutline } from "ionicons/icons";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -37,24 +29,12 @@ const appPages: AppPage[] = [
     {
         title: "Overview",
         url: "/app/overview",
-        iosIcon: trendingUp,
-        mdIcon: trendingUpSharp,
-    },
-    {
-        title: "Accounts",
-        url: "/app/accounts",
-        iosIcon: fileTrayFull,
-        mdIcon: fileTrayFullSharp,
-    },
-    {
-        title: "Overview New",
-        url: "/app/kristof",
         iosIcon: homeOutline,
         mdIcon: homeOutline,
     },
     {
-        title: "Accounts New",
-        url: "/app/accounts-2",
+        title: "Accounts",
+        url: "/app/accounts",
         iosIcon: businessOutline,
         mdIcon: businessOutline,
     },
