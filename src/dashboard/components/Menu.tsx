@@ -10,15 +10,7 @@ import {
     IonMenu,
     IonMenuToggle,
 } from "@ionic/react";
-import {
-    trendingUp,
-    trendingUpSharp,
-    fileTrayFull,
-    fileTrayFullSharp,
-    logOutOutline,
-    businessOutline,
-    homeOutline,
-} from "ionicons/icons";
+import { fileTrayFull, logOutOutline, businessOutline, homeOutline } from "ionicons/icons";
 import React from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
