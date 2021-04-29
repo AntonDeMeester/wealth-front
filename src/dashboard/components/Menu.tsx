@@ -37,24 +37,12 @@ const appPages: AppPage[] = [
     {
         title: "Overview",
         url: "/app/overview",
-        iosIcon: trendingUp,
-        mdIcon: trendingUpSharp,
-    },
-    {
-        title: "Accounts",
-        url: "/app/accounts",
-        iosIcon: fileTrayFull,
-        mdIcon: fileTrayFullSharp,
-    },
-    {
-        title: "Overview New",
-        url: "/app/kristof",
         iosIcon: homeOutline,
         mdIcon: homeOutline,
     },
     {
-        title: "Accounts New",
-        url: "/app/accounts-2",
+        title: "Accounts",
+        url: "/app/accounts",
         iosIcon: businessOutline,
         mdIcon: businessOutline,
     },

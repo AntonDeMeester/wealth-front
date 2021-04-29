@@ -14,9 +14,6 @@ import "@ionic/react/css/text-alignment.css";
 import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/typography.css";
 
-/* React Vis: Nice graphs */
-import "react-vis/dist/style.css";
-
 import { CoordinatorPage } from "./coordinator/CoordinatorPage";
 
 /* Theme variables */

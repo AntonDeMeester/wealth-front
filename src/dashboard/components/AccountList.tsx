@@ -1,12 +1,12 @@
 import { IonButton } from "@ionic/react";
 import { useState } from "react";
 
-import Account from "src/kristof/components/Account";
-import TinkLinkAddAccountModal from "src/kristof/components/TinkLinkAddAccountModal";
 import BigCard from "src/shared/components/BigCard";
 import { Account as AccountType } from "src/shared/types/Banking";
 
+import Account from "./Account";
 import "./AccountList.scss";
+import TinkLinkAddAccountModal from "./TinkLinkAddAccountModal";
 
 interface AccountListProps {
     accounts: AccountType[];

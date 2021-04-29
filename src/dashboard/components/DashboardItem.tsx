@@ -2,11 +2,11 @@ import { IonIcon } from "@ionic/react";
 import { wallet } from "ionicons/icons";
 
 import DataService from "src/core/DataService";
-import MiniGraph from "src/kristof/components/MiniGraph";
 import BigCard from "src/shared/components/BigCard";
 import { WealthItem } from "src/shared/types/Banking";
 
 import "./DashboardItem.scss";
+import MiniGraph from "./MiniGraph";
 
 interface DashboardItemProps {
     icon?: string;
