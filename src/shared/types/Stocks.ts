@@ -12,3 +12,11 @@ export interface WealthItem {
     amount: number;
     amountInEuro: number;
 }
+
+export interface TickerSearchItem {
+    ticker: string;
+    name: string;
+    type: string;
+    region: string;
+    matchScore: number;
+}

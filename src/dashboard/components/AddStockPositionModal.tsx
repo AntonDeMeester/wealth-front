@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { IonButton, IonModal, IonTitle } from "@ionic/react";
+import { IonButton, IonModal } from "@ionic/react";
 import moment from "moment";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -7,19 +7,20 @@ import * as yup from "yup";
 import ApiService from "src/core/ApiService";
 import WealthDateTime from "src/shared/components/DatePicker";
 import WealthInputItem from "src/shared/components/InputItem";
-import { NewStockPosition, StockPosition } from "src/shared/types/Stocks";
+import { NewStockPosition, StockPosition, TickerSearchItem } from "src/shared/types/Stocks";
 
 import "./AddStockPositionModal.scss";
 
 const apiService = new ApiService();
 
-interface TinkLinkAddAccountModalProps {
+interface AddStockPositionModalProps {
     showModal: boolean;
     onShowModalChange: (newState: boolean) => void;
     onNewPosition?: (position: StockPosition) => void;
+    ticker?: TickerSearchItem;
 }
 
-function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition }: TinkLinkAddAccountModalProps) {
+function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, ticker }: AddStockPositionModalProps) {
     const validationSchema = yup.object().shape({
         startDate: yup.date().required().max(new Date()),
         amount: yup.number().min(0),
@@ -36,6 +37,7 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition }
         const formattedPosition = {
             ...position,
             startDate: moment(position.startDate).format("YYYY-MM-DD"),
+            ticker: ticker?.ticker,
         };
         const response = await apiService.post<StockPosition>("stocks/positions", formattedPosition);
         if (response?.data && onNewPosition) {
@@ -51,15 +53,15 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition }
         <div>
             <IonModal isOpen={showModal} cssClass="my-custom-class" onDidDismiss={() => changeModalState(false)}>
                 <div className="tink-link-modal">
-                    <IonTitle>Add new stock position</IonTitle>
                     <form onSubmit={handleSubmit(createNewPosition)} className="tink-link-form">
                         <WealthInputItem
                             className="tink-link-form-item"
                             label="Ticker"
                             name="ticker"
                             required={true}
+                            value={ticker?.name}
                             control={control}
-                            errors={errors}
+                            disabled={true}
                         />
                         <WealthDateTime
                             className="tink-link-form-item"
