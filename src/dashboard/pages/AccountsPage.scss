@@ -22,12 +22,11 @@
 }
 
 .account-list-list-container {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 450px));
+    grid-gap: 32px;
 }
 
 .account-list-container {
     flex-grow: 1;
-    max-width: 400px;
 }

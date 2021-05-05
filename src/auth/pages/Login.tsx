@@ -46,10 +46,7 @@ export function LoginPage() {
 
     return (
         <IonContent>
-            <CenteredForm
-                centerVertically={true}
-                onSubmit={handleSubmit(login)}
-            >
+            <CenteredForm centerVertically={true} onSubmit={handleSubmit(login)}>
                 <WealthInputItem
                     label={"Email"}
                     autocomplete="email"
@@ -69,11 +66,7 @@ export function LoginPage() {
                     control={control}
                     errors={errors}
                 />
-                <IonButton
-                    type="submit"
-                    expand="block"
-                    disabled={!formState.isValid}
-                >
+                <IonButton type="submit" expand="block" disabled={!formState.isValid}>
                     Log In
                 </IonButton>
                 {formErrors.map((error) => (
