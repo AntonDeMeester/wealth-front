@@ -24,8 +24,11 @@ function DashboardPage() {
     }, [match]);
 
     const getBalances = async () => {
-        const response = await apiService.get<WealthItem[]>("banking/balances");
-        setBalances(response.data);
+        const [responseBanking, responseStocks] = await Promise.all([
+            apiService.get<WealthItem[]>("banking/balances"),
+            apiService.get<WealthItem[]>("stocks/balances"),
+        ]);
+        setBalances((responseBanking.data || []).concat(responseStocks.data || []));
     };
 
     return (
