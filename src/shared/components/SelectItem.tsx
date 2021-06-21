@@ -1,16 +1,10 @@
-import {
-    IonItem,
-    IonLabel,
-    IonSelect,
-    IonSelectOption,
-    IonText,
-} from "@ionic/react";
+import { IonItem, IonLabel, IonSelect, IonSelectOption, IonText } from "@ionic/react";
 import { Control, Controller, DeepMap, FieldError } from "react-hook-form";
 
 import { IonInputSelectProps } from "../types/IonProxyTypes";
 import "./SelectItem.scss";
 
-interface SelectOption {
+export interface SelectOption {
     name: string;
     value: string;
 }
@@ -26,15 +20,7 @@ interface SpecificWealthItemProps {
 
 type WealthItemProps = SpecificWealthItemProps & IonInputSelectProps;
 
-function WealthSelectItem({
-    label,
-    control,
-    name,
-    errors,
-    options,
-    defaultOption,
-    ...otherProps
-}: WealthItemProps) {
+function WealthSelectItem({ label, control, name, errors, options, defaultOption, ...otherProps }: WealthItemProps) {
     return (
         <div className="wealth-select-item">
             <IonItem>
@@ -50,10 +36,7 @@ function WealthSelectItem({
                             {...otherProps}
                         >
                             {options.map((optionItem) => (
-                                <IonSelectOption
-                                    value={optionItem.value}
-                                    key={optionItem.value}
-                                >
+                                <IonSelectOption value={optionItem.value} key={optionItem.value}>
                                     {optionItem.name}
                                 </IonSelectOption>
                             ))}
@@ -65,9 +48,7 @@ function WealthSelectItem({
                     rules={{ required: true }}
                 />
             </IonItem>
-            <IonText class="select-item-error">
-                {errors?.[name]?.message}
-            </IonText>
+            <IonText class="select-item-error">{errors?.[name]?.message}</IonText>
         </div>
     );
 }
