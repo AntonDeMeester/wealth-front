@@ -39,14 +39,24 @@ class ApiService {
         });
     }
 
+    public async patch<ResponseType>(
+        endpoint: string,
+        data: any = {},
+        headers: Headers = {}
+    ): Promise<AxiosResponse<ResponseType>> {
+        if (!headers["Content-Type"]) {
+            headers = { ...headers, "Content-Type": "application/json" };
+        }
+        return axiosInstance.patch<ResponseType>(endpoint, data, {
+            headers: headers,
+        });
+    }
+
     public addRequestInterceptor(
         interceptor: (request: AxiosRequestConfig) => AxiosRequestConfig,
         errorInterceptor?: (error: AxiosError) => Promise<AxiosRequestConfig>
     ): number {
-        return axiosInstance.interceptors.request.use(
-            interceptor,
-            errorInterceptor
-        );
+        return axiosInstance.interceptors.request.use(interceptor, errorInterceptor);
     }
 
     public removeRequestInterceptor(interceptorId: number) {
@@ -57,10 +67,7 @@ class ApiService {
         interceptor: (response: AxiosResponse) => AxiosResponse,
         errorInterceptor?: (error: AxiosError) => Promise<AxiosResponse>
     ): number {
-        return axiosInstance.interceptors.response.use(
-            interceptor,
-            errorInterceptor
-        );
+        return axiosInstance.interceptors.response.use(interceptor, errorInterceptor);
     }
 
     public removeResponseInterceptor(interceptorId: number) {

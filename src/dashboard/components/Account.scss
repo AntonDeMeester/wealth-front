@@ -8,6 +8,8 @@
     flex-flow: row nowrap;
     justify-content: stretch;
     align-items: center;
+
+    cursor: pointer;
 }
 
 .account-icon-container {
@@ -16,6 +18,17 @@
     ion-icon {
         font-size: 48px;
         color: var(--ion-color-primary);
+    }
+    &.active {
+        ion-icon {
+            color: var(--ion-color-primary);
+        }
+    }
+
+    &.inactive {
+        ion-icon {
+            color: var(--ion-color-medium);
+        }
     }
 }
 

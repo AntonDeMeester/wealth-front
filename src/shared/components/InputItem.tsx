@@ -13,24 +13,14 @@ interface SpecificWealthItemProps {
 
 type WealthItemProps = SpecificWealthItemProps & IonInputProps;
 
-function WealthInputItem({
-    label,
-    control,
-    name,
-    errors,
-    ...otherProps
-}: WealthItemProps) {
+function WealthInputItem({ label, control, name, errors, ...otherProps }: WealthItemProps) {
     return (
         <div className="wealth-input-item">
             <IonItem>
                 <IonLabel position="floating">{label}</IonLabel>
                 <Controller
                     render={({ onChange, onBlur, value }) => (
-                        <IonInput
-                            name={name}
-                            onIonChange={onChange}
-                            {...otherProps}
-                        />
+                        <IonInput name={name} onIonChange={onChange} value={value || otherProps.defaultValue} {...otherProps} />
                     )}
                     name={name}
                     control={control}
@@ -38,9 +28,7 @@ function WealthInputItem({
                     rules={{ required: true }}
                 />
             </IonItem>
-            <IonText class="input-item-error">
-                {errors?.[name]?.message}
-            </IonText>
+            <IonText class="input-item-error">{errors?.[name]?.message}</IonText>
         </div>
     );
 }
