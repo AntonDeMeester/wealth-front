@@ -22,7 +22,7 @@ function AccountsPage() {
 
     const getAccounts = async () => {
         const response = await apiService.get<Account[]>("banking/accounts");
-        setAccounts(response.data?.sort((a, b) => +b.isActive / 2 - +a.isActive));
+        setAccounts(response.data?.sort((a, b) => (a.isActive === b.isActive ? 0 : a.isActive ? -1 : 1)));
     };
     const getStockPositions = async () => {
         const response = await apiService.get<StockPosition[]>("stocks/positions");

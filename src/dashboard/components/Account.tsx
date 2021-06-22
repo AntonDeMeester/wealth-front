@@ -13,18 +13,25 @@ interface AccountProps {
 
 function Account({ account }: AccountProps) {
     const [showEditAccountModal, setShowEditAccountModal] = useState(false);
+
+    const updateAccount = (updatedAccount: AccountType) => {
+        account = updatedAccount;
+        console.log(`new account should be`, updatedAccount);
+    };
+
     return (
         <div className="account-container" onClick={() => setShowEditAccountModal(true)}>
             <div className={`account-icon-container ${account.isActive ? "active" : "inactive"}`}>
                 <IonIcon md={cardOutline}></IonIcon>
             </div>
             <div className="account-info-container">
-                <p>{account.bank}</p>
+                <p>{account.bankAlias || account.bank}</p>
                 <p>{account.name || account.accountNumber}</p>
             </div>
             <EditAccountModal
                 showModal={showEditAccountModal}
                 onShowModalChange={(newState) => setShowEditAccountModal(newState)}
+                onUpdatedAccount={(updatedAccount) => updateAccount(updatedAccount)}
                 account={account}
             ></EditAccountModal>
         </div>

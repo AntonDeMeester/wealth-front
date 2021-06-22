@@ -18,6 +18,7 @@ const apiService = new ApiService();
 interface EditAccountModalProps {
     showModal: boolean;
     onShowModalChange: (newState: boolean) => void;
+    onUpdatedAccount?: (account: Account) => void;
     account: Account;
 }
 
@@ -31,7 +32,7 @@ const parseBoolean = (value: string): boolean | undefined => {
     return undefined;
 };
 
-function EditAccountModal({ showModal, onShowModalChange, account }: EditAccountModalProps) {
+function EditAccountModal({ showModal, onShowModalChange, onUpdatedAccount, account }: EditAccountModalProps) {
     const validationSchema = yup.object().shape({
         isActive: yup.boolean(),
         name: yup.string(),
@@ -50,6 +51,9 @@ function EditAccountModal({ showModal, onShowModalChange, account }: EditAccount
         };
         console.log(updatedAccount);
         const response = await apiService.patch<Account>(`banking/accounts/${account.accountId}/`, updatedAccount);
+        if (onUpdatedAccount) {
+            onUpdatedAccount(response.data);
+        }
         changeModalState(false);
     };
 
@@ -72,6 +76,14 @@ function EditAccountModal({ showModal, onShowModalChange, account }: EditAccount
                             name="name"
                             required={false}
                             defaultValue={account?.name}
+                            control={control}
+                        />
+                        <WealthInputItem
+                            className="tink-link-form-item"
+                            label="Bank name"
+                            name="bankAlias"
+                            required={false}
+                            defaultValue={account?.bankAlias}
                             control={control}
                         />
                         <WealthSelectItem

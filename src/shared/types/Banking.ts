@@ -5,6 +5,7 @@ export interface Account {
     currency: string;
     type: string;
     bank: string;
+    bankAlias: string;
     externalId: string;
     name: string;
     isActive: boolean;
@@ -13,6 +14,7 @@ export interface Account {
 export interface EditAccount {
     isActive?: boolean;
     name?: string;
+    bankAlias?: string;
 }
 
 export interface WealthItem {
