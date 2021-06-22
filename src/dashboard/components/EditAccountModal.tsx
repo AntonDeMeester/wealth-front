@@ -1,15 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IonButton, IonModal } from "@ionic/react";
-import moment from "moment";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 import ApiService from "src/core/ApiService";
-import WealthDateTime from "src/shared/components/DatePicker";
 import WealthInputItem from "src/shared/components/InputItem";
 import WealthSelectItem, { SelectOption } from "src/shared/components/SelectItem";
 import { Account, EditAccount } from "src/shared/types/Banking";
-import { NewStockPosition, StockPosition, TickerSearchItem } from "src/shared/types/Stocks";
 
 import "./EditAccountModal.scss";
 
