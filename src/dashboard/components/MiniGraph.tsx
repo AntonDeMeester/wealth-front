@@ -6,16 +6,12 @@ interface WealthProps {
     balances: WealthItem[];
 }
 
-interface GraphPoint {
-    date: string | Date;
-    amount: number;
-}
 
 function MiniGraph({ balances }: WealthProps) {
     const graphData = [
         {
             id: "main",
-            data: balances.map((d) => ({ x: new Date(d.date), y: d.amount })),
+            data: balances.map((d) => ({ x: new Date(d.date), y: d.amountInEuro })),
         },
     ];
     const amountRange = getAmountRange(balances);
@@ -62,9 +58,9 @@ function MiniGraph({ balances }: WealthProps) {
     );
 }
 
-const getAmountRange = (data: GraphPoint[]): [number, number] => {
-    const max = Math.max(...data.map((d) => d.amount));
-    const min = Math.min(...data.map((d) => d.amount));
+const getAmountRange = (data: WealthItem[]): [number, number] => {
+    const max = Math.max(...data.map((d) => d.amountInEuro));
+    const min = Math.min(...data.map((d) => d.amountInEuro));
     return [min * 0.8, max];
 };
 

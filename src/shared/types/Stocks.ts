@@ -3,6 +3,8 @@ export interface StockPosition {
     amount: number;
     startDate: string;
     ticker: string;
+    currentValue: number;
+    currentValueInEuro: number;
 }
 
 export type NewStockPosition = Omit<StockPosition, "positionId">;

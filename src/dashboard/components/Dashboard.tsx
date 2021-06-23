@@ -7,13 +7,17 @@ import "./Dashboard.scss";
 import DashboardItem from "./DashboardItem";
 
 interface DashboardProps {
-    balances: WealthItem[];
+    bankBalances: WealthItem[];
+    stockBalances: WealthItem[]
 }
 
 const dataService = new DataService();
 
-function Dashboard({ balances }: DashboardProps) {
-    const balancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(balances, 4));
+function Dashboard({ bankBalances, stockBalances }: DashboardProps) {
+    const allBalances = (bankBalances || []).concat(stockBalances|| [])
+    const balancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(allBalances, 4));
+    const stockBalancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(stockBalances, 4));
+    const bankBalancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(bankBalances, 4));
 
     return (
         <div className="dashboard-component-container">
@@ -24,10 +28,10 @@ function Dashboard({ balances }: DashboardProps) {
             </div>
             <div className="dashboard-item-container">
                 <div className="dashboard-item-small">
-                    <DashboardItem icon={cash} balances={[]} title="Cash"></DashboardItem>
+                    <DashboardItem icon={cash} balances={bankBalancesLastMonth} title="Cash"></DashboardItem>
                 </div>
                 <div className="dashboard-item-small">
-                    <DashboardItem icon={trendingUp} balances={[]} title="Stocks"></DashboardItem>
+                    <DashboardItem icon={trendingUp} balances={stockBalancesLastMonth} title="Stocks"></DashboardItem>
                 </div>
                 <div className="dashboard-item-small">
                     <DashboardItem icon={logoBitcoin} balances={[]} title="Crypto"></DashboardItem>

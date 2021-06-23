@@ -46,7 +46,6 @@ function EditAccountModal({ showModal, onShowModalChange, onUpdatedAccount, acco
             ...updatedAccount,
             isActive: parseBoolean(`${updatedAccount.isActive}`),
         };
-        console.log(updatedAccount);
         const response = await apiService.patch<Account>(`banking/accounts/${account.accountId}/`, updatedAccount);
         if (onUpdatedAccount) {
             onUpdatedAccount(response.data);

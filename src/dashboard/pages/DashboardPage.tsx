@@ -17,24 +17,24 @@ function DashboardPage() {
     // We use this to make sure we refresh the balances when we navigate back to the page
     // Without refreshing balances, the graph won't render
     const match = useRouteMatch();
-    const [balances, setBalances] = useState<WealthItem[]>([]);
+    const [bankBalances, setBankBalances] = useState<WealthItem[]>([]);
+    const [stockBalances, setStockBalances] = useState<WealthItem[]>([]);
 
     useEffect(() => {
         getBalances();
     }, [match]);
 
     const getBalances = async () => {
-        const [responseBanking, responseStocks] = await Promise.all([
-            apiService.get<WealthItem[]>("banking/balances"),
-            apiService.get<WealthItem[]>("stocks/balances"),
+        await Promise.all([
+            apiService.get<WealthItem[]>("banking/balances").then(response => setBankBalances(response.data)),
+            apiService.get<WealthItem[]>("stocks/balances").then(response => setStockBalances(response.data)),
         ]);
-        setBalances((responseBanking.data || []).concat(responseStocks.data || []));
     };
 
     return (
         <BasePage title="Accounts">
             <div className="dashboard-component">
-                <Dashboard balances={balances}></Dashboard>
+                <Dashboard bankBalances={bankBalances} stockBalances={stockBalances}></Dashboard>
             </div>
             {/* <div className="dashboard-other-container">
                 <div className="cashflow-component">

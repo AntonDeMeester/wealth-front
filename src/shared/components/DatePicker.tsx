@@ -9,12 +9,13 @@ interface SpecificWealthDateTimeProps {
     label: string;
     displayFormat: string;
     control: Control<Record<string, any>>;
+    required?: boolean;
     errors?: DeepMap<Record<string, any>, FieldError>;
 }
 
 type DateTimeProps = SpecificWealthDateTimeProps & IonDateTimeProps;
 
-function WealthDateTime({ label, control, name, errors, ...otherProps }: DateTimeProps) {
+function WealthDateTime({ label, control, name, errors, required, ...otherProps }: DateTimeProps) {
     return (
         <div className="wealth-date-picker">
             <IonItem>
@@ -24,7 +25,7 @@ function WealthDateTime({ label, control, name, errors, ...otherProps }: DateTim
                     name={name}
                     control={control}
                     onChangeName="onIonChange"
-                    rules={{ required: true }}
+                    rules={{ required: required ?? true }}
                 />
             </IonItem>
             <IonText class="date-picker-error">{errors?.[name]?.message}</IonText>

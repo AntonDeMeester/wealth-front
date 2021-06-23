@@ -7,20 +7,20 @@ import * as yup from "yup";
 import ApiService from "src/core/ApiService";
 import WealthDateTime from "src/shared/components/DatePicker";
 import WealthInputItem from "src/shared/components/InputItem";
-import { NewStockPosition, StockPosition, TickerSearchItem } from "src/shared/types/Stocks";
+import { NewStockPosition, StockPosition } from "src/shared/types/Stocks";
 
 import "./AddStockPositionModal.scss";
 
 const apiService = new ApiService();
 
-interface AddStockPositionModalProps {
+interface EditStockPositionModalProps {
     showModal: boolean;
     onShowModalChange: (newState: boolean) => void;
     onNewPosition?: (position: StockPosition) => void;
-    ticker?: TickerSearchItem;
+    position: StockPosition;
 }
 
-function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, ticker }: AddStockPositionModalProps) {
+function EditStockPositionModal({ showModal, onShowModalChange, onNewPosition, position }: EditStockPositionModalProps) {
     const validationSchema = yup.object().shape({
         startDate: yup.date().required().max(new Date()),
         amount: yup.number().min(0),
@@ -33,13 +33,12 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, 
         mode: "onSubmit",
     });
 
-    const createNewPosition = async (position: NewStockPosition) => {
+    const createNewPosition = async (updatedPosition: NewStockPosition) => {
         const formattedPosition = {
-            ...position,
-            startDate: moment(position.startDate).format("YYYY-MM-DD"),
-            ticker: ticker?.ticker,
+            ...updatedPosition,
+            startDate: updatedPosition ? moment(position.startDate).format("YYYY-MM-DD") : undefined,
         };
-        const response = await apiService.post<StockPosition>("stocks/positions", formattedPosition);
+        const response = await apiService.patch<StockPosition>(`stocks/positions/${position.positionId}`, formattedPosition);
         if (response?.data && onNewPosition) {
             onNewPosition(response.data);
         }
@@ -59,7 +58,7 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, 
                             label="Ticker"
                             name="ticker"
                             required={true}
-                            value={ticker?.name}
+                            value={position?.ticker}
                             control={control}
                             disabled={true}
                         />
@@ -69,6 +68,8 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, 
                             name="startDate"
                             control={control}
                             displayFormat="YYYY/MM/DD"
+                            required={false}
+                            defaultValue={position.startDate}
                             errors={errors}
                         />
                         <WealthInputItem
@@ -77,12 +78,13 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, 
                             name="amount"
                             type="number"
                             inputmode="numeric"
-                            required={true}
+                            defaultValue={position.amount}
+                            required={false}
                             control={control}
                             errors={errors}
                         />
 
-                        <IonButton type="submit">Add position</IonButton>
+                        <IonButton type="submit">Edit position</IonButton>
                         <IonButton onClick={() => changeModalState(false)}>Cancel</IonButton>
                     </form>
                 </div>
@@ -91,4 +93,4 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange, onNewPosition, 
     );
 }
 
-export default TinkLinkAddAccountModal;
+export default EditStockPositionModal;
