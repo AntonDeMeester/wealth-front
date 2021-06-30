@@ -44,7 +44,7 @@ function TinkLinkAddAccountModal({ showModal, onShowModalChange }: TinkLinkAddAc
             market,
             test: test === "true" ? test : undefined,
         };
-        const response = await apiService.get<{ url: string }>("tink/link", undefined, params);
+        const response = await apiService.get<{ url: string }>("tink/bank/", undefined, params);
         if (response?.data?.url) {
             window.location.href = response?.data?.url;
         }

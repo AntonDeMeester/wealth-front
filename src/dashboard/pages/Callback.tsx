@@ -9,7 +9,7 @@ function Callback() {
     const history = useHistory();
     const queryParams = new URLSearchParams(useLocation().search);
     const code = queryParams.get("code");
-    const credentialsId = queryParams.get("credentials_id");
+    const credentialsId = queryParams.get("credentialsId");
 
     useEffect(() => {
         if (!code && !credentialsId) {
@@ -22,7 +22,7 @@ function Callback() {
         processTinkCode();
     }, [history, code, credentialsId]);
 
-    if (!code) {
+    if (!code && !credentialsId) {
         return <div>Something went wrong</div>;
     }
 

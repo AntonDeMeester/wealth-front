@@ -6,7 +6,6 @@ interface WealthProps {
     balances: WealthItem[];
 }
 
-
 function MiniGraph({ balances }: WealthProps) {
     const graphData = [
         {

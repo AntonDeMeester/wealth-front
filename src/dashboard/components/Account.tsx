@@ -14,10 +14,7 @@ interface AccountProps {
 function Account({ account }: AccountProps) {
     const [showEditAccountModal, setShowEditAccountModal] = useState(false);
 
-    const updateAccount = (updatedAccount: AccountType) => {
-        account = updatedAccount;
-        console.log(`new account should be`, updatedAccount);
-    };
+    const updateAccount = (updatedAccount: AccountType) => {};
 
     return (
         <div className="account-container" onClick={() => setShowEditAccountModal(true)}>
