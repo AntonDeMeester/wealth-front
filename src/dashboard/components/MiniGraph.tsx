@@ -1,4 +1,5 @@
 import { ResponsiveLine } from "@nivo/line";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 import { WealthItem } from "src/shared/types/Banking";
 
@@ -14,46 +15,32 @@ function MiniGraph({ balances }: WealthProps) {
         },
     ];
     const amountRange = getAmountRange(balances);
-
     return (
-        <div
-            style={{
-                position: "relative",
-                height: "100%",
-                minHeight: "0",
-            }}
-        >
-            <div style={{ position: "absolute", width: "100%", height: "100%" }}>
-                <ResponsiveLine
-                    data={graphData}
-                    xScale={{ type: "point" }}
-                    yScale={{
-                        type: "linear",
-                        min: amountRange[0],
-                        max: amountRange[1],
-                        stacked: true,
-                        reverse: false,
-                    }}
-                    colors={["green"]}
-                    curve="monotoneX"
-                    axisTop={null}
-                    axisRight={null}
-                    axisBottom={null}
-                    axisLeft={null}
-                    enableGridX={false}
-                    enableGridY={false}
-                    enablePoints={false}
-                    pointColor={{ theme: "background" }}
-                    pointBorderWidth={2}
-                    pointBorderColor={{ from: "serieColor" }}
-                    pointLabelYOffset={-12}
-                    enableArea={true}
-                    areaBlendMode="multiply"
-                    isInteractive={false}
-                    legends={[]}
-                />
-            </div>
-        </div>
+        <AutoSizer>
+            {({ height, width }) => (
+                <div style={{ height, width: width }}>
+                    <ResponsiveLine
+                        margin={{ right: 48, top: 4, bottom: 4 }}
+                        data={graphData}
+                        xScale={{ type: "time" }}
+                        yScale={{
+                            type: "linear",
+                            min: Math.min(0, amountRange[0]),
+                            max: Math.max(0, amountRange[1]),
+                        }}
+                        colors={["green"]}
+                        curve="monotoneX"
+                        axisTop={null}
+                        axisRight={{ format: "~s" }}
+                        axisBottom={null}
+                        enableGridX={false}
+                        // enableGridY={false}
+                        enablePoints={false}
+                        enableArea={true}
+                    />
+                </div>
+            )}
+        </AutoSizer>
     );
 }
 
