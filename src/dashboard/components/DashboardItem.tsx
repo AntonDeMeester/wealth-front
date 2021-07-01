@@ -20,7 +20,6 @@ function DashboardItem({ icon, balances, title }: DashboardItemProps) {
         icon = wallet;
     }
     const data = dataService.sumByDay(balances);
-    console.log(title, "has",data[data.length - 1], "as last one" )
     const amountFirstDay = data[0]?.amountInEuro ?? 0;
     const amountLastDay = data[data.length - 1]?.amountInEuro ?? 0;
     const amountTrend = amountFirstDay !== 0 ? (amountLastDay - amountFirstDay) / amountFirstDay : 1;
@@ -48,6 +47,7 @@ function DashboardItem({ icon, balances, title }: DashboardItemProps) {
                 </div>
                 <div className="dashboard-item-right">
                     <p>{title}</p>
+                    <div className="dashboard-item-spacer"></div>
                     <div className="dashboard-item-graph">
                         <MiniGraph balances={data}></MiniGraph>
                     </div>

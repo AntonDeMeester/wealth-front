@@ -38,6 +38,12 @@ const appPages: AppPage[] = [
         iosIcon: businessOutline,
         mdIcon: businessOutline,
     },
+    {
+        title: "Banks",
+        url: "/app/banks",
+        iosIcon: businessOutline,
+        mdIcon: businessOutline,
+    },
 ];
 
 const authService = new AuthService();

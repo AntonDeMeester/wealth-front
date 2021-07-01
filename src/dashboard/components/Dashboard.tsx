@@ -8,16 +8,16 @@ import DashboardItem from "./DashboardItem";
 
 interface DashboardProps {
     bankBalances: WealthItem[];
-    stockBalances: WealthItem[]
+    stockBalances: WealthItem[];
 }
 
 const dataService = new DataService();
 
 function Dashboard({ bankBalances, stockBalances }: DashboardProps) {
-    const allBalances = (bankBalances || []).concat(stockBalances|| [])
-    const balancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(allBalances, 4));
-    const stockBalancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(stockBalances, 4));
-    const bankBalancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(bankBalances, 4));
+    const allBalances = (bankBalances || []).concat(stockBalances || []);
+    const balancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(allBalances, 1));
+    const stockBalancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(stockBalances, 1));
+    const bankBalancesLastMonth = dataService.sumByDay(dataService.getItemsOfLastXMonths(bankBalances, 1));
 
     return (
         <div className="dashboard-component-container">
