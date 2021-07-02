@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 
 import ApiService from "src/core/ApiService";
+import AccountListTwo from "src/dashboard/components/AccountListTwo";
 import StackedGraph from "src/dashboard/components/StackedGraph";
 import BasePage from "src/shared/components/BasePage";
 import { Account } from "src/shared/types/Banking";
 import { WealthItem } from "src/shared/types/Stocks";
+
+import "./BanksPage.scss";
 
 const apiService = new ApiService();
 
@@ -34,13 +37,18 @@ function BanksPage() {
 
     return (
         <BasePage title="Banks">
-            <StackedGraph
-                dataList={accounts.map((acc) => ({
-                    id: acc.accountId,
-                    name: createFullAlias(acc),
-                    balances: acc.balances || [],
-                }))}
-            ></StackedGraph>
+            <div className="bank-graph-container">
+                <StackedGraph
+                    dataList={accounts.map((acc) => ({
+                        id: acc.accountId,
+                        name: createFullAlias(acc),
+                        balances: acc.balances || [],
+                    }))}
+                ></StackedGraph>
+            </div>
+            <div>
+                <AccountListTwo accounts={accounts}></AccountListTwo>
+            </div>
         </BasePage>
     );
 }

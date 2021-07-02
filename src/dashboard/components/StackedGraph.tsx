@@ -19,6 +19,7 @@ function StackedGraph({ dataList }: WealthProps) {
     const graphData = addEmptyDates(dataList)
         .map((item) => ({
             id: item.id,
+            label: item.name,
             data: dataService
                 .sumByDay(item.balances)
                 .sort((a, b) => moment(a.date).diff(moment(b.date)))
@@ -64,7 +65,7 @@ function StackedGraph({ dataList }: WealthProps) {
                                 direction: "row",
                                 justify: false,
                                 translateX: 0,
-                                translateY: 150,
+                                translateY: 75,
                                 itemsSpacing: 0,
                                 itemWidth: 100,
                                 itemHeight: 20,
