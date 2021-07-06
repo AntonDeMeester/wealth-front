@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { StockPosition } from "src/shared/types/Stocks";
 
+import EditStockPositionModal from "../modals/EditStockPositionModal";
 import "./StockPosition.scss";
-import EditStockPositionModal from "./EditStockPositionModal";
 
 interface StockPositionProps {
     position: StockPosition;

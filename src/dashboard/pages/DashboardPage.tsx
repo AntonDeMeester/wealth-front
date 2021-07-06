@@ -5,7 +5,7 @@ import ApiService from "src/core/ApiService";
 import BasePage from "src/shared/components/BasePage";
 import { WealthItem } from "src/shared/types/Banking";
 
-import Dashboard from "./../components/Dashboard";
+import Dashboard from "../components/Dashboard";
 import "./DashboardPage.scss";
 
 // import Cashflow from "src/kristof/components/Cashflow";
@@ -26,8 +26,8 @@ function DashboardPage() {
 
     const getBalances = async () => {
         await Promise.all([
-            apiService.get<WealthItem[]>("banking/balances").then(response => setBankBalances(response.data)),
-            apiService.get<WealthItem[]>("stocks/balances").then(response => setStockBalances(response.data)),
+            apiService.get<WealthItem[]>("banking/balances").then((response) => setBankBalances(response.data)),
+            apiService.get<WealthItem[]>("stocks/balances").then((response) => setStockBalances(response.data)),
         ]);
     };
 
@@ -36,14 +36,6 @@ function DashboardPage() {
             <div className="dashboard-component">
                 <Dashboard bankBalances={bankBalances} stockBalances={stockBalances}></Dashboard>
             </div>
-            {/* <div className="dashboard-other-container">
-                <div className="cashflow-component">
-                    <Cashflow></Cashflow>
-                </div>
-                <div className="notifications-component">
-                    <Notifications></Notifications>
-                </div>
-            </div> */}
         </BasePage>
     );
 }

@@ -1,11 +1,11 @@
 import { IonButton } from "@ionic/react";
 import { useEffect, useState } from "react";
 
-import SearchStockTicker from "src/dashboard/components/SearchStockTicker";
 import BigCard from "src/shared/components/BigCard";
 import { StockPosition, TickerSearchItem } from "src/shared/types/Stocks";
 
-import AddStockPositionModal from "./AddStockPositionModal";
+import AddStockPositionModal from "../modals/AddStockPositionModal";
+import SearchStockTicker from "../modals/SearchStockTicker";
 import StockPositionComponent from "./StockPosition";
 
 interface StockListProps {

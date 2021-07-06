@@ -4,9 +4,9 @@ import { useState } from "react";
 import BigCard from "src/shared/components/BigCard";
 import { Account as AccountType } from "src/shared/types/Banking";
 
+import TinkLinkAddAccountModal from "../modals/TinkLinkAddAccountModal";
 import Account from "./Account";
 import "./AccountList.scss";
-import TinkLinkAddAccountModal from "./TinkLinkAddAccountModal";
 
 interface AccountListProps {
     accounts: AccountType[];

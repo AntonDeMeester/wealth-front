@@ -1,13 +1,13 @@
 import { IonButton } from "@ionic/react";
 import { useState } from "react";
 
-import EditAccountModal from "src/dashboard/components/EditAccountModal";
 import BigCard from "src/shared/components/BigCard";
 import { Account as AccountType } from "src/shared/types/Banking";
 
+import EditAccountModal from "../modals/EditAccountModal";
+import TinkLinkAddAccountModal from "../modals/TinkLinkAddAccountModal";
 import "./AccountList.scss";
 import AccountTwo from "./AccountTwo";
-import TinkLinkAddAccountModal from "./TinkLinkAddAccountModal";
 
 interface AccountListProps {
     accounts: AccountType[];

@@ -4,8 +4,8 @@ import { useState } from "react";
 
 import { Account as AccountType } from "src/shared/types/Banking";
 
+import EditAccountModal from "../modals/EditAccountModal";
 import "./Account.scss";
-import EditAccountModal from "./EditAccountModal";
 
 interface AccountProps {
     account: AccountType;
