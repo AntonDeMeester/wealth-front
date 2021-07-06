@@ -14,7 +14,7 @@ interface WealthProps {
     legend?: boolean;
 }
 
-function StackedGraph({ dataList, legend }: WealthProps) {
+function DashboardGraph({ dataList, legend }: WealthProps) {
     const numberOfPoints = 50;
     const sequence = Array.from(Array(numberOfPoints).keys());
     const graphData = addEmptyDates(dataList)
@@ -49,12 +49,13 @@ function StackedGraph({ dataList, legend }: WealthProps) {
                         }}
                         colors={{ scheme: "nivo" }}
                         curve="monotoneX"
-                        axisRight={{ format: "~s" }}
+                        axisRight={{ format: "~s", tickValues: 2 }}
                         axisBottom={{
                             format: "%b %d",
-                            tickValues: "every month",
+                            tickValues: "every week",
                         }}
                         enableGridX={false}
+                        enableGridY={false}
                         enablePoints={false}
                         enableArea={true}
                         areaOpacity={0.1}
@@ -63,35 +64,6 @@ function StackedGraph({ dataList, legend }: WealthProps) {
                         enableSlices={"x"}
                         crosshairType="bottom-left"
                         yFormat={(value) => currencyFormatter.format(Number(value))}
-                        legends={
-                            !legend
-                                ? undefined
-                                : [
-                                      {
-                                          anchor: "bottom",
-                                          direction: "row",
-                                          justify: false,
-                                          translateX: 0,
-                                          translateY: 75,
-                                          itemsSpacing: 0,
-                                          itemWidth: 100,
-                                          itemHeight: 20,
-                                          itemOpacity: 0.75,
-                                          symbolSize: 12,
-                                          symbolShape: "circle",
-                                          symbolBorderColor: "rgba(0, 0, 0, .5)",
-                                          effects: [
-                                              {
-                                                  on: "hover",
-                                                  style: {
-                                                      itemBackground: "rgba(0, 0, 0, .03)",
-                                                      itemOpacity: 1,
-                                                  },
-                                              },
-                                          ],
-                                      },
-                                  ]
-                        }
                         sliceTooltip={({ slice }) => {
                             const date = moment(slice.points[0].data.xFormatted);
                             return (
@@ -114,6 +86,12 @@ function StackedGraph({ dataList, legend }: WealthProps) {
                                             {nameObject[point.serieId]} - {point.data.yFormatted}
                                         </div>
                                     ))}
+                                    <div>
+                                        Total:{" "}
+                                        {currencyFormatter.format(
+                                            Number(slice.points.reduce((total, current) => total + +current.data.y, 0))
+                                        )}
+                                    </div>
                                 </div>
                             );
                         }}
@@ -148,4 +126,4 @@ const addEmptyDates = (dataItems: DataItem[]): DataItem[] => {
     });
     return extraDates;
 };
-export default StackedGraph;
+export default DashboardGraph;
