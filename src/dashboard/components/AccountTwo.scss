@@ -1,0 +1,56 @@
+.account-container {
+    border-radius: 20px;
+    background-color: var(--ion-background-color-dark);
+
+    margin: 8px;
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: stretch;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.account-icon-container {
+    flex-grow: 0;
+    padding: 8px;
+    ion-icon {
+        font-size: 48px;
+        color: var(--ion-color-primary);
+    }
+    &.active {
+        ion-icon {
+            color: var(--ion-color-primary);
+        }
+    }
+
+    &.inactive {
+        ion-icon {
+            color: var(--ion-color-medium);
+        }
+    }
+}
+
+.account-info-container {
+    flex-grow: 1;
+    padding: 8px;
+    min-width: 0;
+
+    p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.account-value-container {
+    padding: 8px;
+    min-width: 0;
+
+    p {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

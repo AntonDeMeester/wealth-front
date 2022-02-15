@@ -1,3 +1,14 @@
+export interface EditAccount {
+    isActive?: boolean;
+    name?: string;
+    bankAlias?: string;
+}
+
+export interface WealthItem {
+    date: string;
+    amount: number;
+    amountInEuro: number;
+}
 export interface Account {
     accountId: string;
     source: string;
@@ -9,16 +20,5 @@ export interface Account {
     externalId: string;
     name: string;
     isActive: boolean;
-}
-
-export interface EditAccount {
-    isActive?: boolean;
-    name?: string;
-    bankAlias?: string;
-}
-
-export interface WealthItem {
-    date: string;
-    amount: number;
-    amountInEuro: number;
+    balances?: WealthItem[];
 }

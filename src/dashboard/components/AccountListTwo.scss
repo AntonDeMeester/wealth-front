@@ -1,0 +1,16 @@
+.account-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-list-title {
+    h2 {
+        font-weight: bold;
+        text-align: center;
+    }
+}
+
+.account-list-add {
+    justify-self: flex-end;
+    align-self: center;
+}
